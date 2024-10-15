@@ -9,6 +9,9 @@ const Header = () => {
     navigate('/'); // Redirect to the login page after logout
   };
 
+  const handleLogin = () => {
+    navigate('/login'); // Redirect to the login page after
+  }
   // Retrieve user data from localStorage
   const user = JSON.parse(localStorage.getItem('user'));
 
@@ -23,7 +26,10 @@ const Header = () => {
           <span className="username">{user.name}</span>
           <button onClick={handleLogout}>Logout</button>
         </div>
-      ) : null}
+      ) : (
+      <div className="user-info">
+      <button onClick={handleLogin}>login</button>
+    </div> )}
     </header>
   );
 };

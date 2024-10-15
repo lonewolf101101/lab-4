@@ -6,7 +6,7 @@ const Users = () => {
     const users = JSON.parse(localStorage.getItem('users')) || [];
 
     return (
-        <div>
+        <div className="container">
             {users.length > 0 ? (
                 users.map((user, index) => (
                     <UserCard key={index} user={user} />

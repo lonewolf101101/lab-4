@@ -31,7 +31,7 @@ function LoginPage() {
       localStorage.setItem('user', JSON.stringify(user)); // Store user in localStorage for logged in status
       setSuccessMessage('Хэрэглэгч амжилттай нэмэгдлээ.'); // "User added successfully."
       setTimeout(() => {
-        navigate('/main'); // Redirect to the main page after a short delay
+        navigate(`/${user.username}`); // Redirect to the main page after a short delay
       }, 2000); // Delay for user to see the success message  
     } else {
       setError('Нэвтрэх нэр эсвэл нууц үг буруу байна.'); // "Invalid username or password"

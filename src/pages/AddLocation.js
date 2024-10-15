@@ -28,8 +28,8 @@ function AddLocation() {
     storedPlaces.push(newPlace);
     localStorage.setItem('places', JSON.stringify(storedPlaces));
 
-    // Navigate back to main page
-    navigate('/main');
+    // Navigate back to the main page associated with the user
+    navigate(`/${user.username}`);
   };
 
   return (

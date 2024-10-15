@@ -7,6 +7,7 @@ import DetailsPage from './pages/DetailsPage';
 import LoginPage from './pages/LoginPage';
 import AddUserPage from './pages/AddUserPage';
 import Users from './pages/Users';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   // Check if the user is logged in
@@ -19,15 +20,14 @@ function App() {
         <Route path="/" element={<Users />} /> {/* Default route */}
         <Route path="/login" element={<LoginPage />} /> {/* Accessible when logged out */}
         <Route path="/add-user" element={<AddUserPage />} />
+        <Route path="/:id/:placeId" element={<DetailsPage />} />
+        <Route path="/:id" element={<MainPage />} />
         {user ? (
           <>
-            <Route path="/main" element={<MainPage />} />
             <Route path="/add-location" element={<AddLocation />} />
-            <Route path="/details/:index" element={<DetailsPage />} />
           </>
         ) : (
-          <>
-          </>
+          <Route path="*" element={<NotFoundPage />} /> 
         )}
       </Routes>
     </Router>

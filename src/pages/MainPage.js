@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function MainPage() {
   const [places, setPlaces] = useState([]);
   const navigate = useNavigate();
-  
-  // Get the logged-in user
-  const user = JSON.parse(localStorage.getItem('user'));
+  const { id } = useParams(); // Use id from the URL params
+
+  // Get the logged-in user from localStorage
+  const user = JSON.parse(localStorage.getItem('user')) || null;
 
   useEffect(() => {
     // Fetch places from localStorage
     const storedPlaces = JSON.parse(localStorage.getItem('places')) || [];
     
-    // Filter places for the logged-in user
-    const userPlaces = storedPlaces.filter(place => place.user === user.username);
-    setPlaces(userPlaces);
-  }, [user.username]);
+    // Filter places based on the id from the URL (not the user)
+    const filteredPlaces = storedPlaces.filter(place => place.user === id);
+    setPlaces(filteredPlaces);
+  }, [id]);
 
+  // Function to navigate to the details page using index
   const goToDetails = (index) => {
-    navigate(`/details/${index}`); // Navigate to the details page for the selected place
+    navigate(`/${id}/${index}`); // Navigate using id and the index of the place
   };
 
   // Function to delete a place
@@ -42,16 +44,20 @@ function MainPage() {
         <div className="place-list">
           {places.map((place, index) => (
             <div key={index} className="place-card">
-              <h3 onClick={() => goToDetails(index)}>{place.name}</h3>
+              <h3 onClick={() => goToDetails(index)}>{place.name}</h3> {/* Pass the index */}
               <p>Дэлгэрэнгүй мэдээлэл үзэх</p>
-              <button onClick={() => handleDeletePlace(index)}>Устгах</button> {/* Delete button */}
+              {user && (
+                <button onClick={() => handleDeletePlace(index)}>Устгах</button>
+              )}
             </div>
           ))}
         </div>
       ) : (
-        <p className="no-places">Одоогоор газар нэмэгдээгүй байна.</p> 
+        <p className="no-places">Одоогоор газар нэмэгдээгүй байна.</p>
       )}
-      <button onClick={() => navigate('/add-location')}>Газар нэмэх</button> {/* "Add Location" */}
+      {user && (
+        <button onClick={() => navigate('/add-location')}>Газар нэмэх</button>
+      )}
     </div>
   );
 }
